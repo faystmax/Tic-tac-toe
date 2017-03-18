@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class MainLogicTest {
 
-    MainLogic mainLogic;            ///< Экземпляр класса Основной логики игры
+    private MainLogic mainLogic;            ///< Экземпляр класса Основной логики игры
 
     @Before
     public void setUp() throws Exception {

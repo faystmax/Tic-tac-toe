@@ -20,7 +20,8 @@ public class MainLogic {
     }
 
     /**
-     *  Получаем размерность игры
+     * Получаем размерность игры
+     *
      * @return текущую размерность игры
      */
     public int getDemension() {
@@ -29,10 +30,15 @@ public class MainLogic {
 
     /**
      * Установка Размерности
+     *
      * @param demension - размерность игры
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException при demension<3 или demension>10
+     * @throws IllegalStateException    при попытке смены размерности, когда игра уже идёт
      */
-    public void setDemension(int demension) throws IllegalArgumentException {
+    public void setDemension(int demension) throws IllegalArgumentException, IllegalStateException {
+        if (isStart() == true) {
+            throw new IllegalStateException();
+        }
         if (demension < 3 || demension > 10) {
             throw new IllegalArgumentException(Integer.toString(demension));
         }
@@ -41,17 +47,19 @@ public class MainLogic {
 
     /**
      * Начинаем игру
+     *
      * @throws IllegalStateException при попытке начала игры, которая уже идёт
      */
     public void startGame() throws IllegalStateException {
-        if(start == true){
+        if (start == true) {
             throw new IllegalStateException();
         }
-        start=true;
+        start = true;
     }
 
     /**
      * Проверка: начата ли игра?
+     *
      * @return true - игра идёт, false иначе
      */
     public boolean isStart() {

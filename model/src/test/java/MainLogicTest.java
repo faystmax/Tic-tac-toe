@@ -1,9 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA
@@ -50,21 +48,41 @@ public class MainLogicTest {
         mainLogic.setDemension(100);
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void setDimension_5_whileGameStarts() {
+        mainLogic.startGame();
+        mainLogic.setDemension(5);
+    }
+
     //endregion
 
     //region Тесты на isStart
 
     @Test
-    public void isStartGame(){
+    public void isStartGame() {
+        mainLogic.stopGame();
         mainLogic.startGame();
         assertTrue(mainLogic.isStart());
     }
 
     @Test
-    public void isStopGame(){
+    public void isStopGame() {
         mainLogic.stopGame();
         assertFalse(mainLogic.isStart());
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void doubleStart() {
+        mainLogic.startGame();
+        mainLogic.startGame();
+    }
+
+    @Test
+    public void doubleEnd() {
+        mainLogic.stopGame();
+        mainLogic.stopGame();
+    }
+
     //endregion
+
 }

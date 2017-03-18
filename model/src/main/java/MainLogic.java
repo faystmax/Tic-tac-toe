@@ -20,4 +20,14 @@ public class MainLogic {
         }
         this.demension = demension;
     }
+
+    public void startGame() {
+    }
+
+    public boolean isStart() {
+        return false;
+    }
+
+    public void stopGame() {
+    }
 }

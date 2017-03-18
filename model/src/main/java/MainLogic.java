@@ -72,4 +72,8 @@ public class MainLogic {
     public void stopGame() {
         start = false;
     }
+
+    public int moveAt(int i, int i1, int i2) {
+        return 0;
+    }
 }

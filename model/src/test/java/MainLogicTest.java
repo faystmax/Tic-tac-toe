@@ -85,4 +85,39 @@ public class MainLogicTest {
 
     //endregion
 
+    //region Тесты на ход игры
+
+    @Test
+    public void moveAt_0_0() {
+        mainLogic.stopGame();
+        mainLogic.startGame();
+        assertEquals(0, mainLogic.moveAt(0, 0, 1));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void moveAtSameCell() {
+        mainLogic.stopGame();
+        mainLogic.startGame();
+        mainLogic.moveAt(0, 0, 1);
+        mainLogic.moveAt(0, 0, 2);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void moveAtCellOutOf() {
+        mainLogic.stopGame();
+        mainLogic.startGame();
+        mainLogic.moveAt(-1, -2, 1);
+    }
+
+    @Test
+    public void moveAtAndCheckIfGameEnds() {
+        mainLogic.stopGame();
+        mainLogic.startGame();
+        mainLogic.moveAt(0, 0, 1);
+        mainLogic.moveAt(0, 1, 1);
+        assertEquals(0, mainLogic.moveAt(0, 2, 1));
+        assertFalse(mainLogic.isStart());
+    }
+
+    //endregion
 }

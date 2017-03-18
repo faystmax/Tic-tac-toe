@@ -14,7 +14,10 @@ public class MainLogic {
         return demension;
     }
 
-    public void setDemension(int demension) {
+    public void setDemension(int demension) throws IllegalArgumentException {
+        if (demension < 3 || demension > 10) {
+            throw new IllegalArgumentException(Integer.toString(demension));
+        }
         this.demension = demension;
     }
 }

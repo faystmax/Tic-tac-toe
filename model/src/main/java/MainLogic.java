@@ -112,15 +112,83 @@ public class MainLogic {
         }
         gameField[x][y] = player;
 
-        gameResult = CheckWinner();
+        gameResult = CheckWinner(x, y);
         return gameResult;
     }
 
-    private int CheckWinner() {
+    /**
+     * Метод проверки победителя
+     *
+     * @param x координата последнего хода
+     * @param y координата последнего хода
+     * @return 0 - игра ещё идёт, 1 - победили крестики, 2 - победили нолики
+     */
+    private int CheckWinner(int x, int y) {
+        int curCount = 0;
+
+        /* Поиск по вертикали */
+        for (int i = 0; i < demension; i++) {
+            if (gameField[i][y] == gameField[x][y]) {
+                curCount++;
+            } else if (gameField[i][y] != gameField[x][y]) {
+                curCount = 0;
+            }
+            if (curCount == countToWin)
+                return gameField[x][y];
+        }
+
+        /* Поиск по горизонтали */
+        for (int i = 0; i < demension; i++) {
+            if (gameField[x][i] == gameField[x][y]) {
+                curCount++;
+            } else if (gameField[x][i] != gameField[x][y]) {
+                curCount = 0;
+            }
+            if (curCount == countToWin)
+                return gameField[x][y];
+        }
+
+        /* Поиск по главной диагонали */
+        for (int i = x / demension, j = y / demension; i < demension && j < demension; i++, j++) {
+            if (gameField[i][j] == gameField[x][y]) {
+                curCount++;
+            } else if (gameField[x][i] != gameField[x][y]) {
+                curCount = 0;
+            }
+            if (curCount == countToWin)
+                return gameField[x][y];
+        }
+
+        //не готово
+        /* Поиск по побочной диагонали*/
+        for (int i = x / demension, j = y / demension; i < demension && j < demension; i++, j++) {
+            if (gameField[i][j] == gameField[x][y]) {
+                curCount++;
+            } else if (gameField[x][i] != gameField[x][y]) {
+                curCount = 0;
+            }
+            if (curCount == countToWin)
+                return gameField[x][y];
+        }
+
         return 0;
     }
 
+    /**
+     * Установка количества очков для победы
+     *
+     * @param countToWin количества очков для победы
+     */
     public void setCountToWin(int countToWin) {
         this.countToWin = countToWin;
+    }
+
+    /**
+     * Получаем количество очков для победы
+     *
+     * @return количество очков для победы
+     */
+    public int getCountToWin() {
+        return countToWin;
     }
 }

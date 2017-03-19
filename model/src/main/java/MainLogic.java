@@ -12,6 +12,7 @@ public class MainLogic {
     private boolean start;          ///< Переменная символизирующая начало игры (true - игра идёт, false - иначе)
     private int[][] gameField;      ///< Игровое поле (0 - пустая ячейка, 1 -стоит крестик, 2 -стоит нолик)
     private int gameResult;         ///< Результат игры (0 - игра идёт либо ещё не началась, 1 - победили крестики, 0 - победили нолики)
+    private int countToWin;         ///< Количество очков необходимое для победы   3 <= countToWin <= 10
 
     /**
      * Инициализация логики
@@ -117,5 +118,9 @@ public class MainLogic {
 
     private int CheckWinner() {
         return 0;
+    }
+
+    public void setCountToWin(int countToWin) {
+        this.countToWin = countToWin;
     }
 }

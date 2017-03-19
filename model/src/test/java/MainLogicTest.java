@@ -129,4 +129,35 @@ public class MainLogicTest {
     }
 
     //endregion
+
+    //region Тесты на countToWin
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setWrongCountToWin_0() {
+        mainLogic.stopGame();
+        mainLogic.setDemension(3);
+        mainLogic.setCountToWin(0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setWrongCountToWin_5() {
+        mainLogic.stopGame();
+        mainLogic.setDemension(3);
+        mainLogic.setCountToWin(5);
+    }
+
+    @Test
+    public void setRightCountToWin_() {
+        mainLogic.stopGame();
+        mainLogic.setDemension(3);
+        mainLogic.setCountToWin(3);
+    }
+
+    @Test
+    public void setRightCountToWin_() {
+        mainLogic.stopGame();
+        mainLogic.setDemension(5);
+        mainLogic.setCountToWin(3);
+    }
+    //endregion
 }

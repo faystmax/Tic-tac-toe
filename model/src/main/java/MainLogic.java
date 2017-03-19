@@ -11,6 +11,7 @@ public class MainLogic {
     private int demension;          ///< Размерность игры (3x3, 6x6) , должна быть  3 <= demension <= 10
     private boolean start;          ///< Переменная символизирующая начало игры (true - игра идёт, false - иначе)
     private int[][] gameField;      ///< Игровое поле (0 - пустая ячейка, 1 -стоит крестик, 2 -стоит нолик)
+    private int gameResult;         ///< Результат игры (0 - игра идёт либо ещё не началась, 1 - победили крестики, 0 - победили нолики)
 
     /**
      * Инициализация логики
@@ -18,6 +19,7 @@ public class MainLogic {
     MainLogic() {
         demension = 3;
         start = false;
+        gameResult = 0;
     }
 
     /**
@@ -56,6 +58,7 @@ public class MainLogic {
             throw new IllegalStateException();
         }
         start = true;
+        gameResult = 0;
 
         // Инициализируем игровое поле
         gameField = new int[demension][demension];
@@ -85,15 +88,34 @@ public class MainLogic {
     }
 
     /**
-     * @param x
-     * @param y
-     * @param player
-     * @return
-     * @throws ArrayIndexOutOfBoundsException
-     * @throws IllegalStateException
+     * Основной метод хода игры
+     *
+     * @param x      - координата x      (0<=x<=demension)
+     * @param y      - координата y      (0<=x<=demension)
+     * @param player - игрок (1 - крестик,  2 -нолик)
+     * @return int    0 - игра идёт,  1 - победили крестики, 2 - победили нолики
+     * @throws ArrayIndexOutOfBoundsException x или y за границами допустимых значений
+     * @throws IllegalStateException          ход сделан на ячеку, на которую уже ходили
+     * @throws IllegalArgumentException       не аерный ввод 1,2
      */
-    public int moveAt(int x, int y, int player) throws ArrayIndexOutOfBoundsException, IllegalStateException {
+    public int moveAt(int x, int y, int player) throws ArrayIndexOutOfBoundsException, IllegalStateException, IllegalArgumentException {
+        if (x < 0 || x > demension ||
+                y < 0 || y > demension) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        if (player != 1 && player != 2) {
+            throw new IllegalArgumentException();
+        }
+        if (gameField[x][y] != 0) {
+            throw new IllegalStateException();
+        }
+        gameField[x][y] = player;
 
+        gameResult = CheckWinner();
+        return gameResult;
+    }
+
+    private int CheckWinner() {
         return 0;
     }
 }

@@ -10,6 +10,7 @@ public class MainLogic {
 
     private int demension;          ///< Размерность игры (3x3, 6x6) , должна быть  3 <= demension <= 10
     private boolean start;          ///< Переменная символизирующая начало игры (true - игра идёт, false - иначе)
+    private int[][] gameField;      ///< Игровое поле (0 - пустая ячейка, 1 -стоит крестик, 2 -стоит нолик)
 
     /**
      * Инициализация логики
@@ -55,6 +56,14 @@ public class MainLogic {
             throw new IllegalStateException();
         }
         start = true;
+
+        // Инициализируем игровое поле
+        gameField = new int[demension][demension];
+        for (int i = 0; i < demension; i++) {
+            for (int j = 0; j > demension; j++) {
+                gameField[i][j] = 0;
+            }
+        }
     }
 
     /**
@@ -68,12 +77,23 @@ public class MainLogic {
 
     /**
      * Остановка игры
+     * Зануляем поле (gameField) и присваиваем false флагу (start)
      */
     public void stopGame() {
         start = false;
+        gameField = null;
     }
 
-    public int moveAt(int i, int i1, int i2) {
+    /**
+     * @param x
+     * @param y
+     * @param player
+     * @return
+     * @throws ArrayIndexOutOfBoundsException
+     * @throws IllegalStateException
+     */
+    public int moveAt(int x, int y, int player) throws ArrayIndexOutOfBoundsException, IllegalStateException {
+
         return 0;
     }
 }

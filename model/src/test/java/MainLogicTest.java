@@ -85,10 +85,10 @@ public class MainLogicTest {
 
     //endregion
 
-    //region Тесты на ход игры
+    //region Тесты на ход игры(moveAt)
 
     @Test
-    public void moveAt_0_0() {
+    public void moveAt_0_0_AndCheckReturn0() {
         mainLogic.stopGame();
         mainLogic.startGame();
         assertEquals(0, mainLogic.moveAt(0, 0, 1));
@@ -115,8 +115,17 @@ public class MainLogicTest {
         mainLogic.startGame();
         mainLogic.moveAt(0, 0, 1);
         mainLogic.moveAt(0, 1, 1);
-        assertEquals(0, mainLogic.moveAt(0, 2, 1));
+        assertEquals(1, mainLogic.moveAt(0, 2, 1));
         assertFalse(mainLogic.isStart());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void moveAtWhithIlegalArgument() {
+        mainLogic.stopGame();
+        mainLogic.startGame();
+        mainLogic.moveAt(0, 0, 0);
+        mainLogic.moveAt(1, 1, 3);
+        mainLogic.moveAt(2, 2, -1);
     }
 
     //endregion

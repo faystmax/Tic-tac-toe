@@ -12,7 +12,7 @@ public class MainLogic {
     private boolean start;          ///< Переменная символизирующая начало игры (true - игра идёт, false - иначе)
     private int[][] gameField;      ///< Игровое поле (0 - пустая ячейка, 1 -стоит крестик, 2 -стоит нолик)
     private int gameResult;         ///< Результат игры (0 - игра идёт либо ещё не началась, 1 - победили крестики, 0 - победили нолики)
-    private int countToWin;         ///< Количество очков необходимое для победы   3 <= countToWin <= 10
+    private int countToWin;         ///< Количество очков необходимое для победы   3 <= countToWin <= demension
 
     /**
      * Инициализация логики
@@ -94,7 +94,7 @@ public class MainLogic {
      * @param x      - координата x      (0<=x<=demension)
      * @param y      - координата y      (0<=x<=demension)
      * @param player - игрок (1 - крестик,  2 -нолик)
-     * @return int    0 - игра идёт,  1 - победили крестики, 2 - победили нолики
+     * @return int    0 - игра идёт,  1 - победили крестики, 2 - победили нолики, 3 -ничья
      * @throws ArrayIndexOutOfBoundsException x или y за границами допустимых значений
      * @throws IllegalStateException          ход сделан на ячеку, на которую уже ходили
      * @throws IllegalArgumentException       не аерный ввод 1,2
@@ -121,7 +121,7 @@ public class MainLogic {
      *
      * @param x координата последнего хода
      * @param y координата последнего хода
-     * @return 0 - игра ещё идёт, 1 - победили крестики, 2 - победили нолики
+     * @return 0 - игра ещё идёт, 1 - победили крестики, 2 - победили нолики, 3 -ничья
      */
     private int CheckWinner(int x, int y) {
         int curCount = 0;
@@ -159,9 +159,9 @@ public class MainLogic {
                 return gameField[x][y];
         }
 
-        //не готово
+
         /* Поиск по побочной диагонали*/
-        for (int i = x / demension, j = y / demension; i < demension && j < demension; i++, j++) {
+        for (int i = demension - x / demension, j = demension - y / demension; i >= 0 && j >= 0; i--, j--) {
             if (gameField[i][j] == gameField[x][y]) {
                 curCount++;
             } else if (gameField[x][i] != gameField[x][y]) {
@@ -170,6 +170,9 @@ public class MainLogic {
             if (curCount == countToWin)
                 return gameField[x][y];
         }
+
+        /* Проверка на ничью */
+
 
         return 0;
     }
@@ -180,6 +183,12 @@ public class MainLogic {
      * @param countToWin количества очков для победы
      */
     public void setCountToWin(int countToWin) {
+        if (countToWin < 3 || countToWin > demension) {
+            throw new IllegalArgumentException();
+        }
+        if (isStart() == true) {
+            throw new IllegalStateException();
+        }
         this.countToWin = countToWin;
     }
 

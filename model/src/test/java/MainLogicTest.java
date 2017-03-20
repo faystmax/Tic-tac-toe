@@ -128,6 +128,24 @@ public class MainLogicTest {
         mainLogic.moveAt(2, 2, -1);
     }
 
+    @Test
+    public void moveAtAndCheckIfВraw() {
+        mainLogic.stopGame();
+        mainLogic.setDemension(3);
+        mainLogic.setCountToWin(3);
+        mainLogic.startGame();
+        mainLogic.moveAt(0, 0, 1);
+        mainLogic.moveAt(0, 1, 2);
+        mainLogic.moveAt(0, 2, 1);
+        mainLogic.moveAt(1, 0, 2);
+        mainLogic.moveAt(1, 1, 1);
+        mainLogic.moveAt(1, 2, 2);
+        mainLogic.moveAt(2, 0, 1);
+        mainLogic.moveAt(2, 1, 2);
+        assertEquals(4, mainLogic.moveAt(2, 2, 1));
+        assertFalse(mainLogic.isStart());
+    }
+
     //endregion
 
     //region Тесты на countToWin
@@ -151,15 +169,25 @@ public class MainLogicTest {
         mainLogic.stopGame();
         mainLogic.setDemension(3);
         mainLogic.setCountToWin(3);
-        assertEquals(3,mainLogic.getCountToWin());
+        assertEquals(3, mainLogic.getCountToWin());
     }
 
     @Test
-    public void setRightCountToWin_5_3() {
+    public void setRightCountToWin_5_WhithDemension3() {
         mainLogic.stopGame();
         mainLogic.setDemension(5);
         mainLogic.setCountToWin(3);
-        assertEquals(3,mainLogic.getCountToWin());
+        assertEquals(3, mainLogic.getCountToWin());
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void setRightCountToWinWhenGameStart() {
+        mainLogic.stopGame();
+        mainLogic.setDemension(5);
+        mainLogic.setCountToWin(3);
+        mainLogic.startGame();
+        mainLogic.setCountToWin(4);
+    }
+
     //endregion
 }

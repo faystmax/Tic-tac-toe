@@ -147,17 +147,19 @@ public class MainLogicTest {
     }
 
     @Test
-    public void setRightCountToWin_() {
+    public void setRightCountToWin_3() {
         mainLogic.stopGame();
         mainLogic.setDemension(3);
         mainLogic.setCountToWin(3);
+        assertEquals(3,mainLogic.getCountToWin());
     }
 
     @Test
-    public void setRightCountToWin_() {
+    public void setRightCountToWin_5_3() {
         mainLogic.stopGame();
         mainLogic.setDemension(5);
         mainLogic.setCountToWin(3);
+        assertEquals(3,mainLogic.getCountToWin());
     }
     //endregion
 }

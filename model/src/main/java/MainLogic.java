@@ -11,7 +11,7 @@ public class MainLogic {
     private int demension;          ///< Размерность игры (3x3, 6x6) , должна быть  3 <= demension <= 10
     private boolean start;          ///< Переменная символизирующая начало игры (true - игра идёт, false - иначе)
     private int[][] gameField;      ///< Игровое поле (0 - пустая ячейка, 1 -стоит крестик, 2 -стоит нолик)
-    private int gameResult;         ///< Результат игры (0 - игра идёт либо ещё не началась, 1 - победили крестики, 0 - победили нолики)
+    private int gameResult;         ///< Результат игры (0 - игра идёт либо ещё не началась, 1 - победили крестики, 0 - победили нолики , 3- ничья)
     private int countToWin;         ///< Количество очков необходимое для победы   3 <= countToWin <= demension
 
     /**
@@ -149,7 +149,8 @@ public class MainLogic {
         }
 
         /* Поиск по главной диагонали */
-        for (int i = x / demension, j = y / demension; i < demension && j < demension; i++, j++) {
+        int min = Math.min(x, y);
+        for (int i = x - min, j = y - min; i < demension && j < demension; i++, j++) {
             if (gameField[i][j] == gameField[x][y]) {
                 curCount++;
             } else if (gameField[x][i] != gameField[x][y]) {
@@ -160,8 +161,20 @@ public class MainLogic {
         }
 
 
-        /* Поиск по побочной диагонали*/
-        for (int i = demension - x / demension, j = demension - y / demension; i >= 0 && j >= 0; i--, j--) {
+        /* Поиск по побочной диагонали */
+        int i = 0, j = 0;
+        if (x + y + 1 == demension) {            //на побочной диагонали
+            i = 0;
+            j = demension - 1;
+        } else if (x + y + 1 < demension) {       //над побочной диагональю
+            i = 0;
+            j = y + x;
+        } else if (x + y + 1 > demension) {       //над побочной диагональю
+            i = x - (demension - y);
+            j = demension - 1;
+        }
+        /****/
+        for (; i < demension && j >= 0; i++, j--) {
             if (gameField[i][j] == gameField[x][y]) {
                 curCount++;
             } else if (gameField[x][i] != gameField[x][y]) {
@@ -172,9 +185,15 @@ public class MainLogic {
         }
 
         /* Проверка на ничью */
+        for (i = 0; i < demension; i++) {
+            for (j = 0; j < demension; j++) {
+                if (gameField[i][j] == 0) {
+                    return 0;
+                }
+            }
+        }
 
-
-        return 0;
+        return 3;
     }
 
     /**

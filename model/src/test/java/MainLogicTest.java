@@ -90,6 +90,7 @@ public class MainLogicTest {
     @Test
     public void moveAt_0_0_AndCheckReturn0() {
         mainLogic.stopGame();
+        mainLogic.setCountToWin(3);
         mainLogic.startGame();
         assertEquals(0, mainLogic.moveAt(0, 0, 1));
     }
@@ -97,6 +98,7 @@ public class MainLogicTest {
     @Test(expected = IllegalStateException.class)
     public void moveAtSameCell() {
         mainLogic.stopGame();
+        mainLogic.setCountToWin(3);
         mainLogic.startGame();
         mainLogic.moveAt(0, 0, 1);
         mainLogic.moveAt(0, 0, 2);
@@ -105,6 +107,7 @@ public class MainLogicTest {
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void moveAtCellOutOf() {
         mainLogic.stopGame();
+        mainLogic.setCountToWin(3);
         mainLogic.startGame();
         mainLogic.moveAt(-1, -2, 1);
     }
@@ -112,16 +115,17 @@ public class MainLogicTest {
     @Test
     public void moveAtAndCheckIfGameEnds() {
         mainLogic.stopGame();
+        mainLogic.setCountToWin(3);
         mainLogic.startGame();
         mainLogic.moveAt(0, 0, 1);
         mainLogic.moveAt(0, 1, 1);
         assertEquals(1, mainLogic.moveAt(0, 2, 1));
-        assertFalse(mainLogic.isStart());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void moveAtWhithIlegalArgument() {
         mainLogic.stopGame();
+        mainLogic.setCountToWin(3);
         mainLogic.startGame();
         mainLogic.moveAt(0, 0, 0);
         mainLogic.moveAt(1, 1, 3);
@@ -129,7 +133,7 @@ public class MainLogicTest {
     }
 
     @Test
-    public void moveAtAndCheckIfВraw() {
+    public void moveAtAndCheckIfKrestWin() {
         mainLogic.stopGame();
         mainLogic.setDemension(3);
         mainLogic.setCountToWin(3);
@@ -142,8 +146,24 @@ public class MainLogicTest {
         mainLogic.moveAt(1, 2, 2);
         mainLogic.moveAt(2, 0, 1);
         mainLogic.moveAt(2, 1, 2);
-        assertEquals(4, mainLogic.moveAt(2, 2, 1));
-        assertFalse(mainLogic.isStart());
+        assertEquals(1, mainLogic.moveAt(2, 2, 1));
+    }
+
+    @Test
+    public void moveAtAndCheckIfBraw() {
+        mainLogic.stopGame();
+        mainLogic.setDemension(3);
+        mainLogic.setCountToWin(3);
+        mainLogic.startGame();
+        mainLogic.moveAt(0, 0, 1);
+        mainLogic.moveAt(0, 1, 2);
+        mainLogic.moveAt(0, 2, 1);
+        mainLogic.moveAt(1, 0, 2);
+        mainLogic.moveAt(1, 1, 1);
+        mainLogic.moveAt(1, 2, 1);
+        mainLogic.moveAt(2, 0, 2);
+        mainLogic.moveAt(2, 1, 1);
+        assertEquals(3, mainLogic.moveAt(2, 2, 2));
     }
 
     //endregion

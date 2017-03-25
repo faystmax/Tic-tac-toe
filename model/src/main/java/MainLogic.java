@@ -136,6 +136,7 @@ public class MainLogic {
             if (curCount == countToWin)
                 return gameField[x][y];
         }
+        curCount = 0;
 
         /* Поиск по горизонтали */
         for (int i = 0; i < demension; i++) {
@@ -147,6 +148,7 @@ public class MainLogic {
             if (curCount == countToWin)
                 return gameField[x][y];
         }
+        curCount = 0;
 
         /* Поиск по главной диагонали */
         int min = Math.min(x, y);
@@ -159,6 +161,7 @@ public class MainLogic {
             if (curCount == countToWin)
                 return gameField[x][y];
         }
+        curCount = 0;
 
 
         /* Поиск по побочной диагонали */
